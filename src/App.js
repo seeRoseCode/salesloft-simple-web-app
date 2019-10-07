@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+const apiKey = process.env.REACT_APP_API_KEY;
+const proxyURL = "https://cors-anywhere.herokuapp.com/";
+const apiURL = "https://api.salesloft.com/v2/people";
+const bearer = `Bearer ${apiKey}`;
 
-function App() {
+
+class App extends Component{
+  componentDidMount(){
+    this.fetchPeople()
+  }
+
+  state = {
+    people: []
+  }
+
+
+  fetchPeople = () => {
+    fetch(proxyURL + apiURL, {
+      method: "GET",
+      headers: {
+        'Authorization': bearer
+      }
+    })
+    .then(res => res.json())
+    .then(res => {this.setState({people: res.data})}
+    )
+  }
+
+  render(){
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+      <h1>YOU WORKIN OR NAH?</h1>
     </div>
   );
+}
 }
 
 export default App;
