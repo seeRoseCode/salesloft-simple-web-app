@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import PeopleTable from './components/PeopleTable';
 const apiKey = process.env.REACT_APP_API_KEY;
 const proxyURL = "https://cors-anywhere.herokuapp.com/";
 const apiURL = "https://api.salesloft.com/v2/people";
@@ -7,6 +10,7 @@ const bearer = `Bearer ${apiKey}`;
 
 
 class App extends Component{
+
   componentDidMount(){
     this.fetchPeople()
   }
@@ -28,12 +32,17 @@ class App extends Component{
     )
   }
 
+  characterCount = () => {
+    console.log("VOILA! EMAIL CHARACTERS!")
+  }
+
   render(){
   return (
     <div className="App">
-      <header className="App-header">
-      </header>
-      <h1>YOU WORKIN OR NAH?</h1>
+    <header>
+      <Button onClick={this.characterCount}>Character Count</Button>
+    </header>
+        <PeopleTable people={this.state.people}/>
     </div>
   );
 }
